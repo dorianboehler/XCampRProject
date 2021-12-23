@@ -1,7 +1,18 @@
-# In this R script, the application is created. There are two main parts. First, there is the user interface. Second, there is the server, where the computations are done.
+# In this R script, the application is created. There are two main parts (after the preparation). 
+# First, there is the user interface. Second, there is the server, where the computations are done.
+
+
+# Preparation -------------------------------------------------------------
+
+# Set working directory
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+
+# Run prepareApp.R
+source("prepareApp.R")
 
 
 # User interface ----------------------------------------------------------
+
 ui <- fluidPage(theme = shinytheme("superhero"),
                 
                 # Use navigation bare at the top of the page
@@ -223,6 +234,7 @@ ui <- fluidPage(theme = shinytheme("superhero"),
 
 
 # Server ------------------------------------------------------------------
+
 server <- function(input, output) {
   
   # First, we need to define which independent variables should be used for the prediction.
@@ -360,6 +372,7 @@ server <- function(input, output) {
 
 
 # Run the application -----------------------------------------------------
+
 shinyApp(ui = ui, server = server)
 
 
