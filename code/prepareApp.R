@@ -19,7 +19,7 @@ library(shinythemes, quietly = TRUE)
 
 # Load data on apartment rental offers in Germany
 # Data from: https://www.kaggle.com/corrieaar/apartment-rental-offers-in-germany (login required)
-immo_data <- read_csv(unz("../data/immoData.zip", "immoData.csv"))
+immo_data <- read_csv("../data/immoData.zip")
 
 
 # Data preparation --------------------------------------------------------
@@ -157,7 +157,7 @@ indep_var <- names(immo_data_inp)[c(2, 3, 5:ncol(immo_data_inp))]
 
 # Compute descriptive statistics per state and show them in maps
 # Source of the code that creates the maps: https://rstudio-pubs-static.s3.amazonaws.com/297613_b47a07743e9d48ee928d1efe947f6b3f.html
-germany <- readOGR(dsn = "../data/DEU_adm", layer = "DEU_adm1", use_iconv = TRUE) # Read the data that we need to create the maps
+germany <- readOGR(dsn = "../data/DEU_adm", layer = "DEU_adm1", encoding = "UTF-8") # Read the data that we need to create the maps
 bundes <- fortify(germany)
 
 bundes$regio1 <- factor(as.numeric(bundes$id)) # Add the state names
