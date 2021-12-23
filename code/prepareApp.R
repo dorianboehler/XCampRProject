@@ -13,6 +13,7 @@ library(ggthemes, quietly = TRUE)
 library(tidymodels, quietly = TRUE)
 library(shiny, quietly = TRUE)
 library(shinythemes, quietly = TRUE)
+library(shinyWidgets, quietly = TRUE)
 
 
 # Data import -------------------------------------------------------------
