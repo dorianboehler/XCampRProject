@@ -7,8 +7,20 @@
 # Set working directory
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
-# Run prepareApp.R
-source("prepareApp.R")
+# Load required packages
+library(tidyverse, quietly = TRUE)
+library(stringr, quietly = TRUE)
+library(formattable, quietly = TRUE)
+library(rgdal, quietly = TRUE)
+library(ggmap, quietly = TRUE)
+library(ggthemes, quietly = TRUE)
+library(tidymodels, quietly = TRUE)
+library(shiny, quietly = TRUE)
+library(shinythemes, quietly = TRUE)
+library(shinyWidgets, quietly = TRUE)
+
+# Load workspace from prepareApp.R
+load("workspace.RData") # This works only if prepareApp.R has been run at least once
 
 
 # User interface ----------------------------------------------------------
@@ -23,7 +35,7 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                                     
                                     # Data input on the left side of the page
                                     sidebarPanel(
-                                      titlePanel("Input"),
+                                      titlePanel("Your Flat"),
                                       
                                       # Define drop-downs to select input (the left string refers to the variable name in the server, the next string refers to the name in the application and the last string refers to the content of the drop-downs)
                                       # When "Any" is chosen, the variable is excluded from the prediction
@@ -47,23 +59,46 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                                     # Show results of data input
                                     mainPanel(
                                       fluidRow(
-                                        # Include an image on the top
-                                        img(src="HSG_Alumni_Haus_Mrz20_128.jpg", align = "center", height = 500, width = "100%"),
-                                        br(),
                                         # Main title
                                         h1("Rent Calculator", align = "center"),
-                                        # Subtitle
-                                        h2("Information"),
+                                        br(),
                                         # Information about the application
-                                        p("Hier Text reinschreiben: Um herauszufinden wo, im Text nach 1234 suchen. Hier kann jemand noch etwas reinschreiben. Dient auch zum auffüllen der Seite. Andererseits auflisten wie man Daten eingibt und was dies bedeutet. Hier bitte noch schreiben, dass Anzahl Zimmer und m2 nicht gleichzeitig benutzt werden sollen (komische Resultate)"),
-                                        h2("Result"),
+                                        p("Please choose the characteristics that a flat must exhibit in order to fulfil your preferences on the left-hand side (Your Flat).
+                                          A multiple linear regression model will estimate monthly total rent of a flat with these characteristics.
+                                          If you are indifferent about a variable, please choose Any so that the multiple linear regression model will exclude the variable from the estimation.
+                                          Please do not forget to uncheck the respective red button Any if you would like to include Living Space (sq m) or Number of Rooms in the estimation.
+                                          However, you should not include Living Space (sq m) and Number of Rooms simultaneously because of multicollinearity. 
+                                          Otherwise, the result would be highly distorted and therefore unreliable. 
+                                          You can find a description of the variables in the second tab (Variable Description)."),
                                         # Prediction
-                                        htmlOutput("prediction")
+                                        h2("Result"),
+                                        htmlOutput("prediction"),
+                                        br(),
+                                        # Include an image so that it looks nice
+                                        img(src="HSG_Alumni_Haus_Mrz20_128.jpg", align = "center", height = 445, width = "100%"),
                                       )
                                     )
                            ),
                            
-                           # Second tab: Tab with a description and an analysis of the data
+                           # Second tab: Tab with a description of the variables
+                           tabPanel("Variable Description",
+                                    mainPanel(
+                                      fluidRow(
+                                        h1("Variables in the Rent Calculator"),
+                                        tags$li("State: German state (Bundesland) in which the flat is located."),
+                                        tags$li("Firing Type: Main source(s) of power."),
+                                        tags$li("Condition: Quality of the flat."),
+                                        tags$li("Balcony: Whether the flat has a balcony or not."),
+                                        tags$li("Cellar: Whether the flat has a cellar or not."),
+                                        tags$li("Construction Year: Decade in which the flat was constructed."),
+                                        tags$li("Living Space (sq m): Number of square meters."),
+                                        tags$li("Number of Rooms: Quantity of rooms."),
+                                        tags$li("Floor: Level of the building on which the flat is.")
+                                      )
+                                    )
+                           ),
+                           
+                           # Third tab: Tab with a description and an analysis of the data
                            tabPanel("Description and Analysis of the Data",
                                     mainPanel(
                                       fluidRow(
@@ -315,7 +350,7 @@ server <- function(input, output) {
     
     # Only return a result if state is specified
     if(input$regio1 != "Choose State") {
-      textOutput <- paste0("The expected monthly total rent of a property that matches your wishes is ", 
+      textOutput <- paste0("The expected monthly total rent of a flat that matches your wishes is ", 
                            "<font color=\"#00B341\"><b>", round(predict(reg_model_inp(), reg_model_inp_data), 0), 
                            " €", "</font color=\"#00B341\"></b>", ".")
     } else {
