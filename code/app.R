@@ -20,7 +20,7 @@ library(shinythemes, quietly = TRUE)
 library(shinyWidgets, quietly = TRUE)
 
 # Load workspace from prepareApp.R
-load("workspace.RData") # This works only if prepareApp.R has been run at least once
+load("prepareApp.RData") # This works only if prepareApp.R has been run at least once
 
 
 # User interface ----------------------------------------------------------
@@ -63,19 +63,19 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                                         h1("Rent Calculator", align = "center"),
                                         br(),
                                         # Information about the application
-                                        p("Please choose the characteristics that a flat must exhibit in order to fulfil your preferences on the left-hand side (Your Flat).
-                                          A multiple linear regression model will estimate monthly total rent of a flat with these characteristics.
+                                        p("Please choose the characteristics that a flat must exhibit in order to meet your preferences on the left-hand side (Your Flat).
+                                          A multiple linear regression model will estimate the monthly total rent of a flat with these characteristics.
                                           If you are indifferent about a variable, please choose Any so that the multiple linear regression model will exclude the variable from the estimation.
                                           Please do not forget to uncheck the respective red button Any if you would like to include Living Space (sq m) or Number of Rooms in the estimation.
                                           However, you should not include Living Space (sq m) and Number of Rooms simultaneously because of multicollinearity. 
                                           Otherwise, the result would be highly distorted and therefore unreliable. 
-                                          You can find a description of the variables in the second tab (Variable Description)."),
+                                          You can find a description of the variables in the second tab (Variable Description), and a description and an analysis of the underlying data in the third tab (Description and Analysis of the Data)."),
                                         # Prediction
                                         h2("Result"),
                                         htmlOutput("prediction"),
                                         br(),
                                         # Include an image so that it looks nice
-                                        img(src="HSG_Alumni_Haus_Mrz20_128.jpg", align = "center", height = 445, width = "100%"),
+                                        img(src="HSG_Alumni_Haus_Mrz20_128.jpg", align = "center", height = 425, width = "100%"),
                                       )
                                     )
                            ),
@@ -350,7 +350,7 @@ server <- function(input, output) {
     
     # Only return a result if state is specified
     if(input$regio1 != "Choose State") {
-      textOutput <- paste0("The expected monthly total rent of a flat that matches your wishes is ", 
+      textOutput <- paste0("The expected monthly total rent of a flat that fulfils your wishes is ", 
                            "<font color=\"#00B341\"><b>", round(predict(reg_model_inp(), reg_model_inp_data), 0), 
                            " €", "</font color=\"#00B341\"></b>", ".")
     } else {

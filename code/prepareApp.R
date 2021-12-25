@@ -425,6 +425,6 @@ remove(coefficients_balcony_cellar, coefficients, i, n)
 # Save workspace ----------------------------------------------------------
 
 # Save workspace, which is then loaded in app.R
-save.image(file = "workspace.RData")
+save.image(file = "prepareApp.RData")
 
 
