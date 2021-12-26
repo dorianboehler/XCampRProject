@@ -54,7 +54,7 @@ The folder [data](data) contains [the data on apartment rental offers in Germany
 * Data to create maps: [https://www.diva-gis.org/gdata](https://www.diva-gis.org/gdata)
 
 ## Team
-* Dorian Böhler (XCamp: dorianboehler)
-* Gabriel Buchli (XCamp: electrostar)
-* Raphael Buss (XCamp: RaphaelB)
-* Martin Rutishauser (XCamp: maruto)
+* Dorian Böhler ([XCamp](https://codingxcamp.com): dorianboehler)
+* Gabriel Buchli ([XCamp](https://codingxcamp.com): electrostar)
+* Raphael Buss ([XCamp](https://codingxcamp.com): RaphaelB)
+* Martin Rutishauser ([XCamp](https://codingxcamp.com): maruto)
