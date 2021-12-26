@@ -2,7 +2,7 @@
 
 ## About the Project
 The goal of this project was to produce a Shiny application that estimates the total rent of a flat whose characteristics the user of the application can specify. Shiny is an R package for creating interactive web applications. In order to achieve this goal, we
-* downloaded data on apartment rental offers in Germany from [kaggle.com](www.kaggle.com),
+* downloaded data on apartment rental offers in Germany from [kaggle](www.kaggle.com),
 * cleaned the data,
 * analysed the data by computing descriptive statistics and estimating a multiple linear regression model,
 * visualised the statistical results, and
