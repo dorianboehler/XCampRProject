@@ -1,5 +1,8 @@
 # Set up ------------------------------------------------------------------
 
+# Clean environment
+rm(list=ls())
+
 # Set working directory
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
