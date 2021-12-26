@@ -1,5 +1,7 @@
-# In this R script, the application is created. There are two main parts (after the preparation). 
-# First, there is the user interface. Second, there is the server, where the computations are done.
+# In this R script, the application is produced. 
+# There are two main parts (after the preparation). 
+# First, there is the user interface. 
+# Second, there is the server, where the computations are done.
 
 
 # Preparation -------------------------------------------------------------

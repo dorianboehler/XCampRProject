@@ -1,3 +1,8 @@
+# In this R script, the data is imported, cleaned, analysed and visualised.
+# The output of this R script will be used in app.R, 
+# where the application is produced.
+
+
 # Set up ------------------------------------------------------------------
 
 # Clean environment
