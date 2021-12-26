@@ -2,7 +2,7 @@
 
 ## About the Project
 The goal of this project was to produce a Shiny application that estimates the total rent of a flat whose characteristics the user of the application can specify. Shiny is an R package for creating interactive web applications. In order to achieve this goal, we
-* downloaded data on apartment rental offers in Germany from [kaggle](www.kaggle.com),
+* downloaded data on apartment rental offers in Germany from [kaggle.com](https://www.kaggle.com),
 * cleaned the data,
 * analysed the data by computing descriptive statistics and estimating a multiple linear regression model,
 * visualised the statistical results, and
@@ -15,7 +15,7 @@ The application is composed of the three tabs
 
 The application is particularly targeted at people who are planning to move to Germany or to move house in Germany.
 
-## Folder Structure
+## Folder Structure
 This GitHub repository comprises code, graphics and data.
 
 The code is split into [prepareApp.R](code/prepareApp.R) and [app.R](code/app.R). The file [prepareApp.R](code/prepareApp.R) reads, cleans, analyses, and visualises the data. The file [app.R](code/app.R) generates the user interface and builds the server, which uses reactive programming. The folder [code](code) also contains the folder [www](code/www), in which an image that is used in the application is saved.
@@ -24,7 +24,7 @@ The folder [data](data) contains [the data on apartment rental offers in Germany
 
 ## Installation
 
-1. **Save the GitHub repository locally**: We strongly advise people who would like to run the code to save the given folder structure locally.
+1. **Download the GitHub repository**: We strongly advise people who would like to run the code to save the GitHub repository locally in the given folder structure.
 
 2. **Install packages**: The following packages are required:
   * `tidyverse`
