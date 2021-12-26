@@ -39,7 +39,7 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                                       
                                       # Define drop-downs to select input (the left string refers to the variable name in the server, the next string refers to the name in the application and the last string refers to the content of the drop-downs)
                                       # When "Any" is chosen, the variable is excluded from the prediction
-                                      selectInput("regio1", "State", choices = c("Choose State", regio1_levels)),
+                                      selectInput("regio1", "State", choices = c("Choose state", regio1_levels)),
                                       selectInput("firingTypes", "Firing Type", choices = c("Any", firingTypes_levels)),
                                       selectInput("condition", "Condition", choices = c("Any", condition_levels)),
                                       selectInput("floor", "Floor", choices = c("Any", floor_levels)),
@@ -63,19 +63,20 @@ ui <- fluidPage(theme = shinytheme("superhero"),
                                         h1("Rent Calculator", align = "center"),
                                         br(),
                                         # Information about the application
-                                        p("Please choose the characteristics that a flat must exhibit in order to meet your preferences on the left-hand side (Your Flat).
-                                          A multiple linear regression model will estimate the monthly total rent of a flat with these characteristics.
-                                          If you are indifferent about a variable, please choose Any so that the multiple linear regression model will exclude the variable from the estimation.
-                                          Please do not forget to uncheck the respective red button Any if you would like to include Living Space (sq m) or Number of Rooms in the estimation.
-                                          However, you should not include Living Space (sq m) and Number of Rooms simultaneously because of multicollinearity. 
-                                          Otherwise, the result would be highly distorted and therefore unreliable. 
-                                          You can find a description of the variables in the second tab (Variable Description), and a description and an analysis of the underlying data in the third tab (Description and Analysis of the Data)."),
+                                        tags$li("Please choose the characteristics that a flat must have in order to fulfil your wishes on the left-hand side (Your Flat). 
+                                        A multiple linear regression model will estimate the monthly total rent of a flat with these characteristics."),
+                                        tags$li("If you are indifferent about a variable, please choose Any so that the multiple linear regression model will exclude the variable from the estimation."),
+                                        tags$li("Please do not forget to uncheck the respective red button Any if you would like to include Living Space (sq m) or Number of Rooms in the estimation. 
+                                        However, you should not include Living Space (sq m) and Number of Rooms simultaneously because of multicollinearity.
+                                                Otherwise, the result would be highly distorted and therefore unreliable."),
+                                        tags$li("You can find a description of the variables in the second tab (Variable Description), 
+                                                and a description and an analysis of the underlying data in the third tab (Description and Analysis of the Data)."),
                                         # Prediction
                                         h2("Result"),
                                         htmlOutput("prediction"),
                                         br(),
                                         # Include an image so that it looks nice
-                                        img(src="HSG_Alumni_Haus_Mrz20_128.jpg", align = "center", height = 425, width = "100%"),
+                                        img(src="HSG_Alumni_Haus_Mrz20_128.jpg", align = "center", height = 402.5, width = "100%"),
                                       )
                                     )
                            ),
@@ -279,7 +280,7 @@ server <- function(input, output) {
   # the independent variable will be excluded. If the user chooses a certain value for an independent variable,
   # the respective boolean will be TRUE and the independent variable will be included.
   
-  used_var_bool <- reactive(c(input$regio1 != "Choose State", input$balcony != "Any",
+  used_var_bool <- reactive(c(input$regio1 != "Choose state", input$balcony != "Any",
                               input$firingTypes != "Any", input$cellar != "Any",
                               input$notuse_livingSpace != TRUE, input$condition != "Any",
                               input$notuse_noRooms != TRUE, input$floor != "Any", 
@@ -320,7 +321,7 @@ server <- function(input, output) {
     reg_model_inp_data <- data.frame(matrix(nrow = 1, ncol = 0))
     
     # Additionally transform the inputs in such a way that they match the underlying data
-    if(input$regio1 != "Choose State") {
+    if(input$regio1 != "Choose state") {
       reg_model_inp_data$regio1 <- str_replace_all(input$regio1, "-", "_")
     }
     if(input$balcony != "Any") {
@@ -349,13 +350,13 @@ server <- function(input, output) {
     }
     
     # Only return a result if state is specified
-    if(input$regio1 != "Choose State") {
+    if(input$regio1 != "Choose state") {
       textOutput <- paste0("The expected monthly total rent of a flat that fulfils your wishes is ", 
                            "<font color=\"#00B341\"><b>", round(predict(reg_model_inp(), reg_model_inp_data), 0), 
                            " €", "</font color=\"#00B341\"></b>", ".")
     } else {
       # Text that is displayed if the user has not chosen a state
-      textOutput <- "Please select a state."
+      textOutput <- "Please choose a state."
     }
     
     # Define the variable prediction

@@ -144,13 +144,13 @@ table1 <- immo_data_inp %>%
 row.names(table1) <- "Rental offers in Germany"
 table1 <- formattable(table1)
 
-# Create linear regression model (OLS)
+# Estimate multiple linear regression model (OLS)
 cor(immo_data_inp$livingSpace, immo_data_inp$noRooms) # The correlation between these two variables is very high (0.7557787), so we do not include both variables in the model (because of multicollinearity)
 
 reg_model <- lm(totalRent ~ . - noRooms - yearConstructed, data = immo_data_inp) # We include yearConstructedRounded instead of yearConstructed
 summary(reg_model)
 
-# Create vector with all independent variables for the shiny app
+# Create vector with all independent variables for the Shiny app
 indep_var <- names(immo_data_inp)[c(2, 3, 5:ncol(immo_data_inp))]
 
 
